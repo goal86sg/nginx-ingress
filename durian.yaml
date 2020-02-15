@@ -1,0 +1,26 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: echo-durian
+  labels:
+    app: echo-durian
+spec:
+  containers:
+  - name:  echo-durian
+    image: hashicorp/http-echo
+    args:
+    - "-text=durian"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: durian-service
+spec:
+  selector:
+    app: echo-durian
+  ports:
+  - port: 5678 # Default port for image
+
+

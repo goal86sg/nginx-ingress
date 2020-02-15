@@ -1,0 +1,27 @@
+#papaya.yaml
+kind: Pod
+apiVersion: v1
+metadata:
+  name: echo-papaya
+  labels:
+    app: echo-papaya
+spec:
+  containers:
+  - name:  echo-papaya
+    image: hashicorp/http-echo
+    args:
+    - "-text=papaya"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: papaya-service
+spec:
+  selector:
+    app: echo-papaya
+  ports:
+  - port: 5678 # Default port for image
+
+
