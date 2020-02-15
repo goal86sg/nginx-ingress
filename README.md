@@ -1,6 +1,6 @@
 # nginx-ingress
 
-## Quickstart
+## Nodeport-ingress
 Note: Refer to https://kubernetes.github.io/ingress-nginx/deploy/ for more information
 
 1) The following Mandatory Command is required for all deployment
@@ -29,3 +29,30 @@ kubectl apply -f ./ingress/fruits-ingress.yaml
 ```
 curl localhost:30080/durian
 curl localhost:30080/papaya
+```
+## With Metallb
+Note: Refer to https://metallb.universe.tf/installation/ for more information
+
+1) To install MetalLB, apply the manifest:
+```
+kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.8.3/manifests/metallb.yaml
+```
+2) Layer 2 configuration config.yaml
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb-system
+  name: config
+data:
+  config: |
+    address-pools:
+    - name: default
+      protocol: layer2
+      addresses:
+      - 203.0.113.10-203.0.113.15
+
+```
+```
+kubectl apply -f ./ingress/metallbconfig.yaml
+```
